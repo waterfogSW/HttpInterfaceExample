@@ -1,1 +1,3 @@
-spring.application.name=HttpInterface
+rest:
+  client:
+    base-url: http://localhost:8080

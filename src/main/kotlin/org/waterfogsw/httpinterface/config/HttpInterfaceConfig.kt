@@ -14,5 +14,18 @@ class HttpInterfaceConfig(
     private val baseUrl: String
 ) {
 
+    @Bean
+    fun userClient(restClientBuilder: RestClient.Builder): UserClient {
+        // RestClient 생성 및 기본 설정
+        val restClient = restClientBuilder
+            .baseUrl(baseUrl)
+            .build()
 
+        // RestClient를 HTTP Interface에 연결
+        val adapter = RestClientAdapter.create(restClient)
+        val factory = HttpServiceProxyFactory.builderFor(adapter)
+            .build()
+
+        return factory.createClient(UserClient::class.java)
+    }
 }
